@@ -1,0 +1,436 @@
+{
+   "en":{
+	  "menu": {
+		  "section1": "Public Procurement",
+		  "section2": "Political Party Financing",
+		  "section3": "Assets Declarations",
+		  "otherPlatforms": "Other IW platforms",
+		  "about": "About",
+		  "landing": "Home"
+	  },
+	  "sectionInfo": {
+		"readMore": "Read more...",
+		"share": "Share",
+		"downloadData": "Download data",
+		"section1": {
+			"title": "INTEGRITY WATCH BOSNIA AND HERZEGOVINA",
+	  		"sectionTitle": "Public Procurement",
+	  		"description": "Bosnia and Herzegovina public institutions spend billions of BAM each year through procurement. Integrity Watch platform for Bosnia and Herzegovina visualizes those tenders since 2019, helping you see which companies consistently get public contracts, how big those contracts are, from which institutions, and potential connections of public officials with such contracts or companies.",
+			"descriptionMore": ""
+		},
+		"section2": {
+			"title": "INTEGRITY WATCH BOSNIA AND HERZEGOVINA",
+	  		"sectionTitle": "Political Party Financing",
+	  		"description": "Campaigns cost money. But who’s paying the bills, and what do they get in return? Data backtracks the declared donations of political entities and candidates since 2018, so you can see how money flows, especially during election years. You can spot when private donors reappear as government contractors.",
+			"descriptionMore": ""
+		},
+		"section3": {
+			"title": "INTEGRITY WATCH BOSNIA AND HERZEGOVINA",
+	  		"sectionTitle": "Assets Declarations",
+	  		"description": "Elected officials are required to declare their assets regularly. We make those declarations since 2022 easy to explore and compare, by year, and by institution. You can see how an elected official’s assets donate to political entities and check potential inconsistencies and risk indicators related to public contracting – potential conflict of interest.",
+			"descriptionMore": ""
+		}
+	  },
+	  "shareModalTitle": "Share this page",
+      "share": "Share on",
+	  "lastUpdatedOn": "Last updated on",
+	  "filters": {
+			"allYears": "All years"
+	  },
+	  "charts": {
+		"general": {
+			"yes": "Yes",
+			"no": "No",
+			"declarations": "declarations",
+			"tenders": "procedures",
+			"donations": "donations",
+			"vendorIsPoliticalDonor": "Vendor is political donor",
+			"vendorIsOwnedByPublicOfficial": "Vendor is a company owned by a public officials",
+			"person": "Individual",
+			"company": "Company"
+		},
+		"section1": {
+			"years": {
+				"title": "Procedures by year",
+				"info": "This chart represents the number of public procurement procedures by year."
+			},
+			"cpv": {
+				"title": "Top CPV codes by number of procedures",
+				"info": "This chart displays the top CPV codes by number of public procurement procedures.<br /><br />Click on the bars to filter the dashboard by the selected CPV codes."
+			},
+			"vendors": {
+				"title": "Top vendors by total value",
+				"info": "This chart displays the top vendors ranked by the total value of the related public procurement procedures.<br /><br />Click on the bars to filter the dashboard by the selected vendors."
+			},
+			"auth": {
+				"title": "Top contracting authorities by total value",
+				"info": "This chart displays the top contracting authorities ranked by the total value of their public procurement procedures.<br /><br />Click on the bars to filter the dashboard by the selected contracting authorities."
+			},
+			"contractType": {
+				"title": "Contract type",
+				"info": "Contract types by number of public procurement procedures.<br /><br />Click on the piechart slices to filter the dashboard by the selected contract types."
+			},
+			"award": {
+				"title": "Award criteria",
+				"info": "Award criteria by number of public procurement procedures.<br /><br />Click on the piechart slices to filter the dashboard by the selected award criteria."
+			},
+			"procedureType": {
+				"title": "Type of procedure",
+				"info": "Procedure types by number of public procurement procedures.<br /><br />Click on the piechart slices to filter the dashboard by the selected procedure types."
+			},
+			"indicators": {
+				"title": "Risk indicators",
+				"info": "This chart highlights the number of public procurement procedures where the vendor has made donations to political parties or where the vendor is a company owned by a public official.<br /><br />Click on a bar to filter the dashboard accordingly."
+			},
+			"table": {
+				"title": "Procedures",
+				"info": "Public procurement procedures list and details."
+			}
+		},
+		"section2": {
+			"years": {
+				"title": "Donations by year",
+				"info": "This chart represents the number of donations to political parties by year."
+			},
+			"donorType": {
+				"title": "Donor type",
+				"info": "Donor type (individual or company) by number of donations to political parties.<br /><br />Click on a piechart slice to filter the dashboard by the selected donor type."
+			},
+			"parties": {
+				"title": "Top parties by donations amount",
+				"info": "This chart displays the top political parties ranked by the total monetary value of the donations received.<br /><br />Click on the bars to filter the dashboard by the selected parties."
+			},
+			"donors": {
+				"title": "Top donors by donations amount",
+				"info": "This chart displays the top donors ranked by the total monetary value of their donations.<br /><br />Click on the bars to filter the dashboard by the selected donors."
+			},
+			"indicators": {
+				"title": "Donations made by tender winners",
+				"info": "This chart highlights the number of donations to political parties that were made by entities that have also won public procurement tenders.<br /><br />Click on a piechart slice to filter the dashboard accordingly."
+			},
+			"table": {
+				"title": "Donations",
+				"info": "Donations list and details."
+			}
+		},
+		"section3": {
+			"race": {
+				"title": "RACE",
+				"info": "RACE (Parliament – state, entity, cantonal, municipal) by number of declarations.<br /><br />Click on the piechart slices to filter the dashboard by the selected categories."
+			},
+			"level": {
+				"title": "Level",
+				"info": "Levels (entity, canton, or municipality name) ranked by by number of declarations.<br /><br />Click on the bars to filter the dashboard by the selected categories."
+			},
+			"party": {
+				"title": "Political party",
+				"info": "This chart displays the top political parties ranked by the number of declarations.<br /><br />Click on the bars to filter the dashboard by the selected parties."
+			},
+			"indicatorTenders": {
+				"title": "Public official owns company that won tenders",
+				"info": "This chart highlights the number of declarations by public officials that own companies that have won public procurement tenders in relevant years.<br /><br />Click on a piechart slice to filter the dashboard accordingly."
+			},
+			"companiesTendersNum": {
+				"title": "Companies owned by public officials, by number of tenders won",
+				"info": "This chart displays the top companies owned by public officials ranked by the number of won public procurement tenders in relevant years.<br /><br />Click on the bars to filter the dashboard by the selected companies."
+			},
+			"companiesTendersVal": {
+				"title": "Companies owned by public officials, by total value of tenders won",
+				"info": "This chart displays the top companies owned by public officials ranked by the total value of won public procurement tenders in relevant years.<br /><br />Click on the bars to filter the dashboard by the selected companies."
+			},
+			"indicatorDonor": {
+				"title": "Public official is political donor",
+				"info": "This chart highlights the number of declarations by public officials who made donations to political parties.<br /><br />Click on a piechart slice to filter the dashboard accordingly."
+			},
+			"table": {
+				"title": "Declarations",
+				"info": "Assets declarations list and details.<br /><br />The rows mentioning companies that won public procurement tenders can be clicked to view a list of the related procedures."
+			}
+		}
+	  },
+	  "modals": {
+		"section3": {
+			"tenders": "Procurement procedures",
+			"procedureNum": "Procedure N°",
+			"procedureName": "Procurement name",
+			"authority": "Contracting authority",
+			"procedureVal": "Contract value",
+			"procedureDate": "Conculusion date"
+		}
+	  },
+	  "footer": {
+		  "filter": "Filter ...",
+		  "reset": "Reset filters",
+		  "counters": {
+			  "of": "of",
+			  "entries": "entries",
+			  "declarations": "declarations",
+			  "tenders": "procedures",
+			  "donations": "donations"
+		  }
+	  },
+	  "tables": {
+         "language": {
+          "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+          "lengthMenu": "Show _MENU_ Entries ",
+          "paginate": {
+            "first":      "First",
+            "last":       "Last",
+            "next":       "Next ",
+            "previous":   "Previous"
+          }
+        },
+		"section1": {
+			"col0": "Nr",
+			"col1": "Procedure N°",
+			"col2": "Procedure name",
+			"col3": "Contracting authority",
+			"col4": "Vendor",
+			"col5": "Procedure type",
+			"col6": "Contract type",
+			"col7": "Contract value",
+			"col8": "Conclusion date"
+		},
+		"section2": {
+			"col0": "Nr",
+			"col1": "Political party",
+			"col2": "Donor type",
+			"col3": "Donor name",
+			"col4": "Company Id",
+			"col5": "Amount (BAM)",
+			"col6": "Date",
+			"col7": "",
+			"col8": ""
+		},
+		"section3": {
+			"col0": "Nr",
+			"col1": "Name",
+			"col2": "RACE",
+			"col3": "Level",
+			"col4": "Political party",
+			"col5": "Company ownership info",
+			"col6": "Company id",
+			"col7": "Company value",
+			"col8": "",
+			"modalButton": "View procurement procedures"
+		}
+      }
+   },
+   "bs":{
+	  "menu": {
+		  "section1": "Javne nabavke",
+		  "section2": "Finansiranje političkih stranaka",
+		  "section3": "Imovinski kartoni",
+		  "otherPlatforms": "Ostale IW platforme",
+		  "about": "O",
+		  "landing": "Home"
+	  },
+	  "sectionInfo": {
+		"readMore": "Saznajte više...",
+		"share": "Podijeli",
+		"downloadData": "Preuzmi podatke",
+		"section1": {
+			"title": "Integrity Watch Bosna i Hercegovina",
+	  		"sectionTitle": "Javne nabavke",
+	  		"description": "Institucije u Bosni i Hercegovini svake godine potroše milijarde maraka putem javnih nabavki. Platforma Integrity Watch Bosna i Hercegovina vizualizuje te javne nabavke od 2019. godine i pomaže vam da vidite koje kompanije redovno dobijaju javne ugovore, kolika je njihova vrijednost, od kojih institucija potiču, te postoji li povezanost između izabranih nosilaca javnih funkcija i tih kompanija ili ugovora.",
+			"descriptionMore": ""
+		},
+		"section2": {
+			"title": "Integrity Watch Bosna i Hercegovina",
+	  		"sectionTitle": "Finansiranje političkih stranaka",
+	  		"description": "Izborne kampanje koštaju. Ali ko plaća račune – i šta zauzvrat dobija? Podaci prate prijavljene donacije političkih subjekata od 2018. godine, kako biste mogli vidjeti kako novac cirkuliše, posebno u vrijeme izbornih godina. Možete primijetiti kada se privatni donatori pojavljuju kao državni dobavljači.",
+			"descriptionMore": ""
+		},
+		"section3": {
+			"title": "Integrity Watch Bosna i Hercegovina",
+	  		"sectionTitle": "Imovinski kartoni",
+	  		"description": "Izabrani zvaničnici su dužni redovno prijavljivati svoju imovinu. Mi te imovinske kartone od 2022. godine činimo jednostavnim za pregled i poređenje, po godini i po instituciji. Možete vidjeti da li izabrani funkcioneri doniraju političkim subjektima, te provjeriti potencijalne nedosljednosti i rizike povezane s javnim nabavkama – potencijalne sukobe interesa.",
+			"descriptionMore": ""
+		}
+	  },
+	  "shareModalTitle": "Podijeli ovu stranicu",
+      "share": "Podijeli na",
+	  "lastUpdatedOn": "Last updated on",
+	  "filters": {
+			"allYears": "Sve godine"
+	  },
+	  "charts": {
+		"general": {
+			"yes": "Da",
+			"no": "Ne",
+			"declarations": "imovinski kartoni",
+			"tenders": "postupci",
+			"donations": "donacije",
+			"vendorIsPoliticalDonor": "Dobavljač je politički donator",
+			"vendorIsOwnedByPublicOfficial": "Dobavljač je kompanija u vlasništvu izabranog zvaničnika",
+			"person": "Fizičko lice",
+			"company": "Pravno lice"
+		},
+		"section1": {
+			"years": {
+				"title": "Postupci javnih nabavki po godinama",
+				"info": "Ovaj grafikon prikazuje broj postupaka javnih nabavki po godinama."
+			},
+			"cpv": {
+				"title": "Najčešći CPV kodovi prema broju postupka",
+				"info": "Ovaj grafikon prikazuje najčešće CPV kodove prema broju postupaka javnih nabavki. Klikom na stubac možete filtrirati prikaz po odabranim CPV kodovima."
+			},
+			"vendors": {
+				"title": "Najveći dobavljači prema ukupnoj vrijednosti ugovora",
+				"info": "Ovaj grafikon prikazuje dobavljače rangirane prema ukupnoj vrijednosti ugovora iz postupaka javnih nabavki. Klikom na stubac možete filtrirati prikaz po odabranim dobavljačima."
+			},
+			"auth": {
+				"title": "Najveći ugovorni organi prema ukupnoj vrijednosti ugovora",
+				"info": "Ovaj grafikon prikazuje ugovorne organe rangirane prema ukupnoj vrijednosti njihovih postupaka javnih nabavki. Klikom na stubac možete filtrirati prikaz po odabranim ugovornim organima."
+			},
+			"contractType": {
+				"title": "Vrste ugovora",
+				"info": "Prikazuje vrste ugovora prema broju postupaka javnih nabavki. Klikom na segment kružnog grafikona možete filtrirati prikaz po odabranoj vrsti ugovora."
+			},
+			"award": {
+				"title": "Kriterij dodjele ugovora",
+				"info": "Prikazuje kriterije dodjele ugovora prema broju postupaka javnih nabavki. Klikom na segment kružnog grafikona možete filtrirati prikaz po odabranim kriterijima."
+			},
+			"procedureType": {
+				"title": "Vrsta postupka javne nabavke",
+				"info": "Prikazuje vrste postupaka javnih nabavki prema broju sprovedenih postupaka. Klikom na segment kružnog grafikona možete filtrirati prikaz po odabranoj vrsti postupka."
+			},
+			"indicators": {
+				"title": "Pokazatelji rizika",
+				"info": "Ovaj grafikon prikazuje broj postupaka javnih nabavki u kojima je dobavljač donirao političkim partijama ili je kompanija u vlasništvu izabranog javnog funkcionera. Klikom na stubac možete filtrirati prikaz u skladu s odabranim pokazateljem."
+			},
+			"table": {
+				"title": "Postupci",
+				"info": "Lista i detalji postupaka javnih nabavki"
+			}
+		},
+		"section2": {
+			"years": {
+				"title": "Donacije po godinama",
+				"info": "Ovaj grafikon prikazuje broj donacija političkim partijama po godinama"
+			},
+			"donorType": {
+				"title": "Vrsta donatora",
+				"info": "Vrsta donatora (fizičko ili pravno lice) prema broju donacija političkim partijama. Kliknite na segment kružnog grafikona da filtrirate prikaz po odabranoj vrsti donatora."
+			},
+			"parties": {
+				"title": "Top političke stranke prema iznosu donacija",
+				"info": "Ovaj grafikon prikazuje političke stranke rangirane prema ukupnom novčanom iznosu primljenih donacija. Kliknite na stubac da filtrirate prikaz po odabranim strankama."
+			},
+			"donors": {
+				"title": "Top donatori prema iznosu donacija",
+				"info": "Ovaj grafikon prikazuje donatore rangirane prema ukupnom novčanom iznosu njihovih donacija. Kliknite na stubac da filtrirate prikaz po odabranim donatorima."
+			},
+			"indicators": {
+				"title": "Donacije koje su dali pobjednici javnih nabavki",
+				"info": "Ovaj grafikon prikazuje broj donacija političkim partijama koje su dale firme ili subjekti koji su takođe pobijedili na postupcima javnih nabavki. Kliknite na segment kružnog grafikona da filtrirate prikaz u skladu s odabranom kategorijom."
+			},
+			"table": {
+				"title": "Donacije",
+				"info": "Lista i detalji donacija"
+			}
+		},
+		"section3": {
+			"race": {
+				"title": "Izborna utrka",
+				"info": "Ovaj grafikon prikazuje broj imovinskih kartona prema nivou izborne utrke (Parlament – državni, entitetski, kantonalni, općinski). Kliknite na segmente kružnog grafikona da filtrirate prikaz po odabranim kategorijama."
+			},
+			"level": {
+				"title": "Nivo",
+				"info": "Ovaj grafikon prikazuje nivoe vlasti (entitet, kanton ili općina) rangirane prema broju imovinskih kartona. Kliknite na stubce da filtrirate prikaz po odabranim kategorijama."
+			},
+			"party": {
+				"title": "Politička stranka",
+				"info": "Ovaj grafikon prikazuje političke stranke rangirane prema broju podnesenih imovinskih kartona. Kliknite na stubce da filtrirate prikaz po odabranim strankama."
+			},
+			"indicatorTenders": {
+				"title": "Izabrani javni funkcioner posjeduje firmu koja je dobila tendere",
+				"info": "Ovaj grafikon prikazuje broj imovinskih kartona izabranih javnih funkcionera koji posjeduju firme koje su u relevantnim godinama pobijedile na postupcima javnih nabavki. Kliknite na segment kružnog grafikona da filtrirate prikaz prema odabranoj kategoriji."
+			},
+			"companiesTendersNum": {
+				"title": "Firme u vlasništvu izabranih javnih funkcionera prema broju osvojenih tendera",
+				"info": "Ovaj grafikon prikazuje firme u vlasništvu izabranih javnih funkcionera rangirane prema broju osvojenih tendera u relevantnim godinama. Kliknite na stubce da filtrirate prikaz po odabranim firmama."
+			},
+			"companiesTendersVal": {
+				"title": "Firme u vlasništvu izabranih javnih funkcionera prema ukupnoj vrijednosti osvojenih tendera",
+				"info": "Ovaj grafikon prikazuje firme u vlasništvu izabranih javnih funkcionera rangirane prema ukupnoj vrijednosti osvojenih tendera u relevantnim godinama. Kliknite na stubce da filtrirate prikaz po odabranim firmama."
+			},
+			"indicatorDonor": {
+				"title": "Izabrani javni funkcioner je donator političke stranke",
+				"info": "Ovaj grafikon prikazuje broj imovinskih kartona javnih funkcionera koji su donirali političkim strankama. Kliknite na segment kružnog grafikona da filtrirate prikaz u skladu s odabranom kategorijom."
+			},
+			"table": {
+				"title": "Imovinski kartoni",
+				"info": "Lista i detalji imovinskih kartona. Redovi koji sadrže firme koje su dobile javne nabavke mogu se kliknuti kako bi se prikazala lista povezanih postupaka."
+			}
+		}
+	  },
+	  "modals": {
+		"section3": {
+			"tenders": "Postupci javnih nabavki",
+			"procedureNum": "Broj postupka",
+			"procedureName": "Naziv javne nabavke",
+			"authority": "Ugovorni organ",
+			"procedureVal": "Vrijednost ugovora",
+			"procedureDate": "Datum zaključenja"
+		}
+	  },
+	  "footer": {
+		  "filter": "Filter ...",
+		  "reset": "Resetuj filtere",
+		  "counters": {
+			  "of": "od",
+			  "entries": "unosa",
+			  "declarations": "imovinski kartoni",
+			  "tenders": "procedure",
+			  "donations": "donacije"
+		  }
+	  },
+	  "tables": {
+         "language": {
+          "info": "Prikazano _START_ do _END_ od _TOTAL_ unosa",
+          "lengthMenu": "Prikaži _MENU_ unosa",
+          "paginate": {
+            "first":      "Prva",
+            "last":       "Poslednja",
+            "next":       "Sljedeća",
+            "previous":   "Prethodna"
+          }
+        },
+		"section1": {
+			"col0": "Broj",
+			"col1": "Broj postupka",
+			"col2": "Naziv postupka",
+			"col3": "Ugovorni organ",
+			"col4": "Dobavljač",
+			"col5": "Vrsta postupka javne nabavke",
+			"col6": "Vrsta ugovora",
+			"col7": "Vrijednost ugovora",
+			"col8": "Datum zaključenja"
+		},
+		"section2": {
+			"col0": "Broj",
+			"col1": "Politička stranka",
+			"col2": "Vrsta donatora",
+			"col3": "Naziv donatora",
+			"col4": "ID firme",
+			"col5": "Iznos (BAM)",
+			"col6": "Datum",
+			"col7": "",
+			"col8": ""
+		},
+		"section3": {
+			"col0": "Broj",
+			"col1": "Ime ",
+			"col2": "Utrka",
+			"col3": "Nivo",
+			"col4": "Politička stranka",
+			"col5": "Informacije o vlasništvu nad kompanijom",
+			"col6": "ID firme",
+			"col7": "Vrijednost firme",
+			"col8": "",
+			"modalButton": "Pogledaj postupke javnih nabavki"
+		}
+      }
+   }
+}

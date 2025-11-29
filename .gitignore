@@ -1,0 +1,7 @@
+node_modules/
+dist/
+public/data/procurement.csv
+public/data/downloadable_csv_xls/procurement.csv
+npm-debug.log
+yarn-error.log
+.cache/
