@@ -179,6 +179,14 @@ var vueApp = new Vue({
         window.open(xlsDatasetPath, "_blank");
       }
     },
+    //Copy to clipboard
+    copyToClipboard: function(elId) {
+      var textToCopy = document.getElementById(elId);
+      textToCopy.select();
+      textToCopy.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      console.log("Copied: " + textToCopy.value);
+    },
     //Share
     share: function(platform) {
       if (platform == "twitter") {
