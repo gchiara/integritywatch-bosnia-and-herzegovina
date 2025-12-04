@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Integrity Watch Bosnia and Herzegovina</title>
-  <meta property="og:url" content="" />
+  <meta property="og:url" content="https://integritywatch.ba/" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Integrity Watch Bosnia and Herzegovina" />
   <meta property="og:description" content="Integrity Watch Bosnia and Herzegovina" />
-  <meta property="og:image" content="" />
+  <meta property="og:image" content="https://integritywatch.ba/images/thumbnail.jpg" />
   <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -177,7 +177,7 @@
           <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-              <div class="modal-title">Share chart</div>
+              <div class="modal-title"></div>
               <button type="button" class="close" data-dismiss="modal"><i class="material-icons">close</i></button>
             </div>
             <!-- Modal body -->
