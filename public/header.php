@@ -24,6 +24,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-iwlist" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="https://www.integritywatch.eu/" target="_blank">EU</a>
+          <a class="dropdown-item" href="https://integritywatch.ba/" target="_blank">Bosnia and Herzegovina</a>
           <a class="dropdown-item" href="https://integritywatch.cz/" target="_blank">Czechia</a>
           <a class="dropdown-item" href="https://ausriik.ee/" target="_blank">Estonia</a>
           <a class="dropdown-item" href="https://www.integritywatch.fr/" target="_blank">France</a>
@@ -31,15 +32,19 @@
           <a class="dropdown-item" href="https://www.integritywatch.gr/" target="_blank">Greece</a>
           <a class="dropdown-item" href="https://tenderbajnok.transparency.hu/" target="_blank">Hungary</a>
           <a class="dropdown-item" href="http://www.soldiepolitica.it/" target="_blank">Italy</a>
+          <a class="dropdown-item" href="https://integritywatchkosova.org/" target="_blank">Kosovo</a>
           <a class="dropdown-item" href="https://deputatiuzdelnas.lv/" target="_blank">Latvia</a>
           <a class="dropdown-item" href="https://manoseimas.lt/" target="_blank">Lithuania</a>
           <a class="dropdown-item" href="https://iw.daphne.foundation/" target="_blank">Malta</a>
           <a class="dropdown-item" href="https://www.integritywatch.nl/" target="_blank">Netherlands</a>
+          <a class="dropdown-item" href="https://www.integritywatch.mk/" target="_blank">North Macedonia</a>
           <a class="dropdown-item" href="https://integritywatch.transparencia.pt/deputados.php" target="_blank">Portugal</a>
           <a class="dropdown-item" href="https://integritywatch.ro/" target="_blank">Romania</a>
+          <a class="dropdown-item" href="https://integritywatchserbia.org.rs/" target="_blank">Serbia</a>
           <a class="dropdown-item" href="https://integritywatch.sk/" target="_blank">Slovakia</a>
           <a class="dropdown-item" href="http://varuhintegritete.transparency.si/" target="_blank">Slovenia</a>
           <a class="dropdown-item" href="https://integritywatch.es/" target="_blank">Spain</a>
+          <a class="dropdown-item" href="https://integritywatchturkiye.com/" target="_blank">Türkiye</a>
           <a class="dropdown-item" href="https://openaccess.transparency.org.uk/" target="_blank">United Kingdom</a>
         </div>
       </li>
