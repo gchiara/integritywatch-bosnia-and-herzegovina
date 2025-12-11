@@ -11,6 +11,7 @@ Install dependencies
 ```
 yarn install
 ```
+Unzip public/data/procurement.csv.zip file
 
 
 ### Compiles and hot-reloads for development
