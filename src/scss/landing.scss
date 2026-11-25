@@ -234,6 +234,23 @@ body, #app {
     }
 }
 
+//INTRO VIDEO
+#introVideoModal {
+  .modal-dialog {
+    width: 1100px;
+    max-width: 90%;
+    margin: 30px auto 0 auto;
+  }
+  .modal-title {
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  video {
+    width: 100%;
+    height: auto;
+  }
+}
+
 //FOOTER
 footer {
     background: #e3e7ef;

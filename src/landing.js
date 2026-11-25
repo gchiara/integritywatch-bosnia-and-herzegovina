@@ -50,6 +50,11 @@ var vueApp = new Vue({
         var url = new URL(window.location.href);
         url.searchParams.set("l", this.language);
         window.history.pushState(null, "", url.toString());
+        $('#introVideoModal').modal();
+      }
+      var privacyPolicyLink = document.getElementById('privacyPolicyLink');
+      if(privacyPolicyLink) {
+        privacyPolicyLink.setAttribute('href', './privacy_policy.php?l='+this.language);
       }
     },
   },
@@ -81,4 +86,12 @@ json("./data/strings.json?" + randomPar, (err, stringsData) => {
   //Set language
   vuedata.stringsData = stringsData;
   vueApp.selectLanguage(getUrlParameter("l"), false);
+});
+
+$('#introVideoModal').modal();
+$("#introVideoModal").on('hidden.bs.modal', function (e) {
+    var video = document.getElementById("introVideo"); 
+    var videoBhs = document.getElementById("introVideoBhs"); 
+    if(video) { video.pause(); }
+    if(videoBhs) { videoBhs.pause(); }
 });

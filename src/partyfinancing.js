@@ -149,6 +149,10 @@ var vueApp = new Vue({
         window.history.pushState(null, "", url.toString());
         window.location.reload();
       }
+      var privacyPolicyLink = document.getElementById('privacyPolicyLink');
+      if(privacyPolicyLink) {
+        privacyPolicyLink.setAttribute('href', './privacy_policy.php?l='+this.language);
+      }
     },
     //Open share and download modals
     openModal: function(modalId) {
@@ -312,7 +316,7 @@ var recalcWidth = function(divId) {
   return document.getElementById(divId).offsetWidth - vuedata.chartMargin;
 };
 var recalcCharsLength = function(width) {
-  return parseInt(width / 7);
+  return parseInt(width / 8);
 };
 var calcPieSize = function(divId) {
   var newWidth = recalcWidth(divId);
@@ -506,490 +510,501 @@ json("./data/strings.json?" + randomPar, (err, stringsData) => {
   vueApp.selectLanguage(getUrlParameter("l"), false);
 
   //Load data
-  csv("./data/donations.csv?" + randomPar, (err, csvData) => {
-    var mainData = csvData;
-    //Parse data
-    var years = [];
-    _.each(mainData, function(d) {
-      //Extract years
-      d.year = d.year;
-      if (years.indexOf(d.year) == -1) {
-        years.push(d.year);
-      }
-    });
-    years.sort();
-    vuedata.dataYears = years;
-
-    //Filter by year if year is selected
-    if (vuedata.selectedYear !== "") {
-      mainData = _.filter(csvData, function(d) {
-        return d.year == vuedata.selectedYear;
+  csv("./data/party_names_fix.csv?" + randomPar, (err, partyNamesFix) => {
+    csv("./data/donations.csv?" + randomPar, (err, csvData) => {
+      vuedata.partyNamesFix = {};
+      _.each(partyNamesFix, function(x) {
+        vuedata.partyNamesFix[x.party.toLowerCase().trim()] = x.party_new_name;
       });
-    }
-
-    //Set dc main vars
-    var ndx = crossfilter(mainData);
-    var searchDimension = ndx.dimension(function(d) {
-      var entryString = "" + d.donorName + " " + d.party;
-      return entryString.toLowerCase();
-    });
-
-    //CHART 1 - YEARS
-    var createYearsChart = function() {
-      var chart = charts.years.chart;
-      var dimension = ndx.dimension(function(d) {
-        return d.year;
-      });
-      var group = dimension.group().reduceSum(function(d) {
-        return 1;
-      });
-      var width = recalcWidth(charts.years.divId);
-      var order = vuedata.dataYears;
-      chart
-        .width(width)
-        .height(290)
-        .group(group)
-        .dimension(dimension)
-        .elasticY(true)
-        .renderArea(true)
-        .on("preRender", function(chart, filter) {})
-        .margins({ top: 30, right: 20, bottom: 20, left: 40 })
-        .x(d3.scaleBand().domain(order))
-        .xUnits(dc.units.ordinal)
-        .elasticY(true)
-        .title(function(d) {
-          return (
-            d.key +
-            ": " +
-            formatValueString(d.value) +
-            " " +
-            vuedata.t.charts.general.donations
-          );
-        })
-        .colorCalculator(function(d, i) {
-          return vuedata.colors.default;
-        });
-      chart.yAxis().tickFormat(function(d) {
-        return formatValueString(d) + "";
-      });
-      chart.render();
-    };
-
-    //CHART 2 - DONOR TYPE
-    var createDonorTypeChart = function() {
-      var chart = charts.donorType.chart;
-      var dimension = ndx.dimension(function(d) {
-        if (vuedata.t.charts.general[d.donorType]) {
-          return vuedata.t.charts.general[d.donorType];
+      var mainData = csvData;
+      //Parse data
+      var years = [];
+      _.each(mainData, function(d) {
+        //Extract years
+        d.year = d.year;
+        if (years.indexOf(d.year) == -1) {
+          years.push(d.year);
         }
-        return d.donorType;
-      });
-      var group = dimension.group().reduceSum(function(d) {
-        return 1;
-      });
-      var sizes = calcPieSize(charts.donorType.divId);
-      var legendMaxChars = 40;
-      if (sizes.width > 425) {
-        legendMaxChars = 70;
-      }
-      chart
-        .width(sizes.width)
-        .height(sizes.height)
-        .cy(sizes.cy)
-        .innerRadius(sizes.innerRadius)
-        .radius(sizes.radius)
-        .cap(7)
-        .legend(
-          dc
-            .legend()
-            .x(0)
-            .y(sizes.legendY)
-            .gap(10)
-            .autoItemWidth(true)
-            .horizontal(false)
-            .legendWidth(sizes.width)
-            .legendText(function(d) {
-              var thisKey = d.name;
-              if (thisKey.length > legendMaxChars) {
-                return thisKey.substring(0, legendMaxChars) + "...";
-              }
-              return thisKey;
-            })
-        )
-        .title(function(d) {
-          return (
-            d.key +
-            ": " +
-            formatValueString(d.value) +
-            " " +
-            vuedata.t.charts.general.donations
-          );
-        })
-        .label(function(d) {
-          var percent =
-            d.value /
-            group.all().reduce(function(a, v) {
-              return a + v.value;
-            }, 0);
-          percent = percent * 100;
-          return percent.toFixed(1).replace(".", ",") + " %";
-        })
-        .dimension(dimension)
-        .group(group)
-        .ordinalColors(vuedata.colors.pieDefaultShort);
-      chart.render();
-    };
-
-    //CHART 3 - TOP PARTIES BY DONATIONS
-    var createPartiesChart = function() {
-      var chart = charts.parties.chart;
-      var dimension = ndx.dimension(function(d) {
-        return d.party;
-      }, false);
-      var group = dimension.group().reduceSum(function(d) {
-        return d.amount;
-      });
-      var filteredGroup = (function(source_group) {
-        return {
-          all: function() {
-            return source_group.top(15).filter(function(d) {
-              return d.value != 0;
-            });
-          },
-        };
-      })(group);
-      var width = recalcWidth(charts.parties.divId);
-      var charsLength = recalcCharsLength(width);
-      chart
-        .width(width)
-        .height(380)
-        .margins({ top: 0, left: 0, right: 20, bottom: 20 })
-        .group(filteredGroup)
-        .dimension(dimension)
-        .colorCalculator(function(d, i) {
-          return vuedata.colors.default;
-        })
-        .label(function(d) {
-          if (d.key.length > charsLength) {
-            return d.key.substring(0, charsLength) + "...";
-          }
-          return d.key;
-        })
-        .title(function(d) {
-          return d.key + ": " + formatValueString(d.value.toFixed(2)) + " BAM";
-        })
-        .elasticX(true)
-        .xAxis()
-        .ticks(4)
-        .tickFormat(function(d) {
-          return formatValueString(d) + "";
-        });
-      chart.render();
-    };
-
-    //CHART 4 - TOP DONORS BY DONATIONS
-    var createDonorsChart = function() {
-      var chart = charts.donors.chart;
-      var dimension = ndx.dimension(function(d) {
-        return d.donorName;
-      }, false);
-      var group = dimension.group().reduceSum(function(d) {
-        return d.amount;
-      });
-      var filteredGroup = (function(source_group) {
-        return {
-          all: function() {
-            return source_group.top(15).filter(function(d) {
-              return d.value != 0;
-            });
-          },
-        };
-      })(group);
-      var width = recalcWidth(charts.donors.divId);
-      var charsLength = recalcCharsLength(width);
-      chart
-        .width(width)
-        .height(380)
-        .margins({ top: 0, left: 0, right: 20, bottom: 20 })
-        .group(filteredGroup)
-        .dimension(dimension)
-        .colorCalculator(function(d, i) {
-          return vuedata.colors.default;
-        })
-        .label(function(d) {
-          if (d.key.length > charsLength) {
-            return d.key.substring(0, charsLength) + "...";
-          }
-          return d.key;
-        })
-        .title(function(d) {
-          return d.key + ": " + formatValueString(d.value.toFixed(2)) + " BAM";
-        })
-        .elasticX(true)
-        .xAxis()
-        .ticks(4)
-        .tickFormat(function(d) {
-          return formatValueString(d) + "";
-        });
-      chart.render();
-    };
-
-    //CHART 5 - DONOR IS TENDER WINNER
-    var createIndicatorsChart = function() {
-      var chart = charts.indicators.chart;
-      var dimension = ndx.dimension(function(d) {
-        if (d.donor_has_won_tenders == "True") {
-          return vuedata.t.charts.general.yes;
+        //Fix parties names 
+        if(vuedata.partyNamesFix[d.party.toLowerCase().trim()]) {
+          console.log(d.party);
+          d.party = vuedata.partyNamesFix[d.party.toLowerCase().trim()];
         }
-        return vuedata.t.charts.general.no;
       });
-      var group = dimension.group().reduceSum(function(d) {
-        return 1;
-      });
-      var sizes = calcPieSize(charts.indicators.divId);
-      var legendMaxChars = 40;
-      if (sizes.width > 425) {
-        legendMaxChars = 70;
-      }
-      chart
-        .width(sizes.width)
-        .height(sizes.height)
-        .cy(sizes.cy)
-        .innerRadius(sizes.innerRadius)
-        .radius(sizes.radius)
-        .cap(7)
-        .legend(
-          dc
-            .legend()
-            .x(0)
-            .y(sizes.legendY)
-            .gap(10)
-            .autoItemWidth(true)
-            .horizontal(false)
-            .legendWidth(sizes.width)
-            .legendText(function(d) {
-              var thisKey = d.name;
-              if (thisKey.length > legendMaxChars) {
-                return thisKey.substring(0, legendMaxChars) + "...";
-              }
-              return thisKey;
-            })
-        )
-        .title(function(d) {
-          return (
-            d.key +
-            ": " +
-            formatValueString(d.value) +
-            " " +
-            vuedata.t.charts.general.donations
-          );
-        })
-        .label(function(d) {
-          var percent =
-            d.value /
-            group.all().reduce(function(a, v) {
-              return a + v.value;
-            }, 0);
-          percent = percent * 100;
-          return percent.toFixed(1).replace(".", ",") + " %";
-        })
-        .dimension(dimension)
-        .group(group)
-        .colorCalculator(function(d, i) {
-          return vuedata.colors.yesNoPieRed[d.key];
-        });
-      chart.render();
-    };
+      years.sort();
+      vuedata.dataYears = years;
 
-    //TABLE
-    var createTable = function() {
-      var count = 0;
-      charts.table.chart = $("#dc-data-table").dataTable({
-        language: vuedata.t.tables.language,
-        columnDefs: [
-          {
-            searchable: false,
-            orderable: false,
-            targets: 0,
-            data: function(row, type, val, meta) {
-              return count;
-            },
-          },
-          {
-            searchable: false,
-            orderable: true,
-            targets: 1,
-            defaultContent: "N/A",
-            data: function(d) {
-              return d.party;
-            },
-          },
-          {
-            searchable: false,
-            orderable: true,
-            targets: 2,
-            defaultContent: "N/A",
-            data: function(d) {
-              if (vuedata.t.charts.general[d.donorType]) {
-                return vuedata.t.charts.general[d.donorType];
-              }
-              return d.donorType;
-            },
-          },
-          {
-            searchable: false,
-            orderable: true,
-            targets: 3,
-            defaultContent: "N/A",
-            data: function(d) {
-              return d.donorName;
-            },
-          },
-          {
-            searchable: false,
-            orderable: true,
-            targets: 4,
-            defaultContent: "N/A",
-            data: function(d) {
-              return d.companyId;
-            },
-          },
-          {
-            searchable: false,
-            orderable: true,
-            targets: 5,
-            defaultContent: "N/A",
-            type: "formattednum",
-            data: function(d) {
-              return formatValueString(d.amount);
-            },
-          },
-          {
-            searchable: false,
-            orderable: true,
-            targets: 6,
-            defaultContent: "N/A",
-            data: function(d) {
-              return d.date;
-            },
-          },
-        ],
-        iDisplayLength: 25,
-        bPaginate: true,
-        bLengthChange: true,
-        bFilter: false,
-        order: [[1, "desc"]],
-        bSort: true,
-        bInfo: true,
-        bAutoWidth: false,
-        bDeferRender: true,
-        aaData: searchDimension.top(Infinity),
-        bDestroy: true,
+      //Filter by year if year is selected
+      if (vuedata.selectedYear !== "") {
+        mainData = _.filter(csvData, function(d) {
+          return d.year == vuedata.selectedYear;
+        });
+      }
+
+      //Set dc main vars
+      var ndx = crossfilter(mainData);
+      var searchDimension = ndx.dimension(function(d) {
+        var entryString = "" + d.donorName + " " + d.party;
+        return entryString.toLowerCase();
       });
-      var datatable = charts.table.chart;
-      datatable.on("draw.dt", function() {
-        var PageInfo = $("#dc-data-table")
-          .DataTable()
-          .page.info();
-        datatable
-          .DataTable()
-          .column(0, { page: "current" })
-          .nodes()
-          .each(function(cell, i) {
-            cell.innerHTML = i + 1 + PageInfo.start;
+
+      //CHART 1 - YEARS
+      var createYearsChart = function() {
+        var chart = charts.years.chart;
+        var dimension = ndx.dimension(function(d) {
+          return d.year;
+        });
+        var group = dimension.group().reduceSum(function(d) {
+          return 1;
+        });
+        var width = recalcWidth(charts.years.divId);
+        var order = vuedata.dataYears;
+        chart
+          .width(width)
+          .height(290)
+          .group(group)
+          .dimension(dimension)
+          .elasticY(true)
+          .renderArea(true)
+          .on("preRender", function(chart, filter) {})
+          .margins({ top: 30, right: 20, bottom: 20, left: 40 })
+          .x(d3.scaleBand().domain(order))
+          .xUnits(dc.units.ordinal)
+          .elasticY(true)
+          .title(function(d) {
+            return (
+              d.key +
+              ": " +
+              formatValueString(d.value) +
+              " " +
+              vuedata.t.charts.general.donations
+            );
+          })
+          .colorCalculator(function(d, i) {
+            return vuedata.colors.default;
           });
-      });
-      datatable.DataTable().draw();
+        chart.yAxis().tickFormat(function(d) {
+          return formatValueString(d) + "";
+        });
+        chart.render();
+      };
 
-      $("#dc-data-table tbody").on("click", "tr", function() {
-        var data = datatable
-          .DataTable()
-          .row(this)
-          .data();
-        vuedata.selectedEntry = data;
-      });
-    };
+      //CHART 2 - DONOR TYPE
+      var createDonorTypeChart = function() {
+        var chart = charts.donorType.chart;
+        var dimension = ndx.dimension(function(d) {
+          if (vuedata.t.charts.general[d.donorType]) {
+            return vuedata.t.charts.general[d.donorType];
+          }
+          return d.donorType;
+        });
+        var group = dimension.group().reduceSum(function(d) {
+          return 1;
+        });
+        var sizes = calcPieSize(charts.donorType.divId);
+        var legendMaxChars = 40;
+        if (sizes.width > 425) {
+          legendMaxChars = 70;
+        }
+        chart
+          .width(sizes.width)
+          .height(sizes.height)
+          .cy(sizes.cy)
+          .innerRadius(sizes.innerRadius)
+          .radius(sizes.radius)
+          .cap(7)
+          .legend(
+            dc
+              .legend()
+              .x(0)
+              .y(sizes.legendY)
+              .gap(10)
+              .autoItemWidth(true)
+              .horizontal(false)
+              .legendWidth(sizes.width)
+              .legendText(function(d) {
+                var thisKey = d.name;
+                if (thisKey.length > legendMaxChars) {
+                  return thisKey.substring(0, legendMaxChars) + "...";
+                }
+                return thisKey;
+              })
+          )
+          .title(function(d) {
+            return (
+              d.key +
+              ": " +
+              formatValueString(d.value) +
+              " " +
+              vuedata.t.charts.general.donations
+            );
+          })
+          .label(function(d) {
+            var percent =
+              d.value /
+              group.all().reduce(function(a, v) {
+                return a + v.value;
+              }, 0);
+            percent = percent * 100;
+            return percent.toFixed(1).replace(".", ",") + " %";
+          })
+          .dimension(dimension)
+          .group(group)
+          .ordinalColors(vuedata.colors.pieDefaultShort);
+        chart.render();
+      };
 
-    //REFRESH TABLE
-    function RefreshTable() {
-      dc.events.trigger(function() {
-        var alldata = searchDimension.top(Infinity);
-        charts.table.chart.fnClearTable();
-        charts.table.chart.fnAddData(alldata);
-        charts.table.chart.fnDraw();
-      });
-    }
+      //CHART 3 - TOP PARTIES BY DONATIONS
+      var createPartiesChart = function() {
+        var chart = charts.parties.chart;
+        var dimension = ndx.dimension(function(d) {
+          return d.party;
+        }, false);
+        var group = dimension.group().reduceSum(function(d) {
+          return d.amount;
+        });
+        var filteredGroup = (function(source_group) {
+          return {
+            all: function() {
+              return source_group.top(15).filter(function(d) {
+                return d.value != 0;
+              });
+            },
+          };
+        })(group);
+        var width = recalcWidth(charts.parties.divId);
+        var charsLength = recalcCharsLength(width);
+        chart
+          .width(width)
+          .height(380)
+          .margins({ top: 0, left: 0, right: 20, bottom: 20 })
+          .group(filteredGroup)
+          .dimension(dimension)
+          .colorCalculator(function(d, i) {
+            return vuedata.colors.default;
+          })
+          .label(function(d) {
+            if (d.key.length > charsLength) {
+              return d.key.substring(0, charsLength) + "...";
+            }
+            return d.key;
+          })
+          .title(function(d) {
+            return d.key + ": " + formatValueString(d.value.toFixed(2)) + " BAM";
+          })
+          .elasticX(true)
+          .xAxis()
+          .ticks(4)
+          .tickFormat(function(d) {
+            return formatValueString(d) + "";
+          });
+        chart.render();
+      };
 
-    //SEARCH INPUT FUNCTIONALITY
-    var typingTimer;
-    var doneTypingInterval = 1000;
-    var $input = $("#search-input");
-    $input.on("keyup", function() {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(doneTyping, doneTypingInterval);
-    });
-    $input.on("keydown", function() {
-      clearTimeout(typingTimer);
-    });
-    function doneTyping() {
-      var s = $input.val().toLowerCase();
-      searchDimension.filter(function(d) {
-        return d.indexOf(s) !== -1;
-      });
-      throttle();
-      var throttleTimer;
-      function throttle() {
-        window.clearTimeout(throttleTimer);
-        throttleTimer = window.setTimeout(function() {
-          dc.redrawAll();
-        }, 250);
+      //CHART 4 - TOP DONORS BY DONATIONS
+      var createDonorsChart = function() {
+        var chart = charts.donors.chart;
+        var dimension = ndx.dimension(function(d) {
+          return d.donorName;
+        }, false);
+        var group = dimension.group().reduceSum(function(d) {
+          return d.amount;
+        });
+        var filteredGroup = (function(source_group) {
+          return {
+            all: function() {
+              return source_group.top(15).filter(function(d) {
+                return d.value != 0;
+              });
+            },
+          };
+        })(group);
+        var width = recalcWidth(charts.donors.divId);
+        var charsLength = recalcCharsLength(width);
+        chart
+          .width(width)
+          .height(380)
+          .margins({ top: 0, left: 0, right: 20, bottom: 20 })
+          .group(filteredGroup)
+          .dimension(dimension)
+          .colorCalculator(function(d, i) {
+            return vuedata.colors.default;
+          })
+          .label(function(d) {
+            if (d.key.length > charsLength) {
+              return d.key.substring(0, charsLength) + "...";
+            }
+            return d.key;
+          })
+          .title(function(d) {
+            return d.key + ": " + formatValueString(d.value.toFixed(2)) + " BAM";
+          })
+          .elasticX(true)
+          .xAxis()
+          .ticks(4)
+          .tickFormat(function(d) {
+            return formatValueString(d) + "";
+          });
+        chart.render();
+      };
+
+      //CHART 5 - DONOR IS TENDER WINNER
+      var createIndicatorsChart = function() {
+        var chart = charts.indicators.chart;
+        var dimension = ndx.dimension(function(d) {
+          if (d.donor_has_won_tenders == "True") {
+            return vuedata.t.charts.general.yes;
+          }
+          return vuedata.t.charts.general.no;
+        });
+        var group = dimension.group().reduceSum(function(d) {
+          return 1;
+        });
+        var sizes = calcPieSize(charts.indicators.divId);
+        var legendMaxChars = 40;
+        if (sizes.width > 425) {
+          legendMaxChars = 70;
+        }
+        chart
+          .width(sizes.width)
+          .height(sizes.height)
+          .cy(sizes.cy)
+          .innerRadius(sizes.innerRadius)
+          .radius(sizes.radius)
+          .cap(7)
+          .legend(
+            dc
+              .legend()
+              .x(0)
+              .y(sizes.legendY)
+              .gap(10)
+              .autoItemWidth(true)
+              .horizontal(false)
+              .legendWidth(sizes.width)
+              .legendText(function(d) {
+                var thisKey = d.name;
+                if (thisKey.length > legendMaxChars) {
+                  return thisKey.substring(0, legendMaxChars) + "...";
+                }
+                return thisKey;
+              })
+          )
+          .title(function(d) {
+            return (
+              d.key +
+              ": " +
+              formatValueString(d.value) +
+              " " +
+              vuedata.t.charts.general.donations
+            );
+          })
+          .label(function(d) {
+            var percent =
+              d.value /
+              group.all().reduce(function(a, v) {
+                return a + v.value;
+              }, 0);
+            percent = percent * 100;
+            return percent.toFixed(1).replace(".", ",") + " %";
+          })
+          .dimension(dimension)
+          .group(group)
+          .colorCalculator(function(d, i) {
+            return vuedata.colors.yesNoPieRed[d.key];
+          });
+        chart.render();
+      };
+
+      //TABLE
+      var createTable = function() {
+        var count = 0;
+        charts.table.chart = $("#dc-data-table").dataTable({
+          language: vuedata.t.tables.language,
+          columnDefs: [
+            {
+              searchable: false,
+              orderable: false,
+              targets: 0,
+              data: function(row, type, val, meta) {
+                return count;
+              },
+            },
+            {
+              searchable: false,
+              orderable: true,
+              targets: 1,
+              defaultContent: "N/A",
+              data: function(d) {
+                return d.party;
+              },
+            },
+            {
+              searchable: false,
+              orderable: true,
+              targets: 2,
+              defaultContent: "N/A",
+              data: function(d) {
+                if (vuedata.t.charts.general[d.donorType]) {
+                  return vuedata.t.charts.general[d.donorType];
+                }
+                return d.donorType;
+              },
+            },
+            {
+              searchable: false,
+              orderable: true,
+              targets: 3,
+              defaultContent: "N/A",
+              data: function(d) {
+                return d.donorName;
+              },
+            },
+            {
+              searchable: false,
+              orderable: true,
+              targets: 4,
+              defaultContent: "N/A",
+              data: function(d) {
+                return d.companyId;
+              },
+            },
+            {
+              searchable: false,
+              orderable: true,
+              targets: 5,
+              defaultContent: "N/A",
+              type: "formattednum",
+              data: function(d) {
+                return formatValueString(d.amount);
+              },
+            },
+            {
+              searchable: false,
+              orderable: true,
+              targets: 6,
+              defaultContent: "N/A",
+              data: function(d) {
+                return d.date;
+              },
+            },
+          ],
+          iDisplayLength: 25,
+          bPaginate: true,
+          bLengthChange: true,
+          bFilter: false,
+          order: [[1, "desc"]],
+          bSort: true,
+          bInfo: true,
+          bAutoWidth: false,
+          bDeferRender: true,
+          aaData: searchDimension.top(Infinity),
+          bDestroy: true,
+        });
+        var datatable = charts.table.chart;
+        datatable.on("draw.dt", function() {
+          var PageInfo = $("#dc-data-table")
+            .DataTable()
+            .page.info();
+          datatable
+            .DataTable()
+            .column(0, { page: "current" })
+            .nodes()
+            .each(function(cell, i) {
+              cell.innerHTML = i + 1 + PageInfo.start;
+            });
+        });
+        datatable.DataTable().draw();
+
+        $("#dc-data-table tbody").on("click", "tr", function() {
+          var data = datatable
+            .DataTable()
+            .row(this)
+            .data();
+          vuedata.selectedEntry = data;
+        });
+      };
+
+      //REFRESH TABLE
+      function RefreshTable() {
+        dc.events.trigger(function() {
+          var alldata = searchDimension.top(Infinity);
+          charts.table.chart.fnClearTable();
+          charts.table.chart.fnAddData(alldata);
+          charts.table.chart.fnDraw();
+        });
       }
-    }
 
-    //Reset charts
-    var resetGraphs = function() {
-      for (var c in charts) {
-        if (charts[c].type !== "table" && charts[c].chart.hasFilter()) {
-          charts[c].chart.filterAll();
+      //SEARCH INPUT FUNCTIONALITY
+      var typingTimer;
+      var doneTypingInterval = 1000;
+      var $input = $("#search-input");
+      $input.on("keyup", function() {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+      });
+      $input.on("keydown", function() {
+        clearTimeout(typingTimer);
+      });
+      function doneTyping() {
+        var s = $input.val().toLowerCase();
+        searchDimension.filter(function(d) {
+          return d.indexOf(s) !== -1;
+        });
+        throttle();
+        var throttleTimer;
+        function throttle() {
+          window.clearTimeout(throttleTimer);
+          throttleTimer = window.setTimeout(function() {
+            dc.redrawAll();
+          }, 250);
         }
       }
-      searchDimension.filter(null);
-      $("#search-input").val("");
-      dc.redrawAll();
-    };
-    $(".reset-btn").click(function() {
-      resetGraphs();
+
+      //Reset charts
+      var resetGraphs = function() {
+        for (var c in charts) {
+          if (charts[c].type !== "table" && charts[c].chart.hasFilter()) {
+            charts[c].chart.filterAll();
+          }
+        }
+        searchDimension.filter(null);
+        $("#search-input").val("");
+        dc.redrawAll();
+      };
+      $(".reset-btn").click(function() {
+        resetGraphs();
+      });
+
+      //Render charts
+      createYearsChart();
+      createDonorTypeChart();
+      createPartiesChart();
+      createDonorsChart();
+      createIndicatorsChart();
+      createTable();
+
+      $(".dataTables_wrapper").append($(".dataTables_length"));
+
+      //Hide loader
+      vuedata.loader = false;
+
+      //COUNTERS
+      //Main counter
+      var all = ndx.groupAll();
+      var counter = dc
+        .dataCount(".dc-data-count")
+        .dimension(ndx)
+        .group(all)
+        .formatNumber(locale.format(",d"));
+      counter.render();
+      counter.on("renderlet.resetall", function(c) {
+        RefreshTable();
+      });
+
+      //Window resize function
+      window.onresize = function(event) {
+        resizeGraphs();
+      };
     });
-
-    //Render charts
-    createYearsChart();
-    createDonorTypeChart();
-    createPartiesChart();
-    createDonorsChart();
-    createIndicatorsChart();
-    createTable();
-
-    $(".dataTables_wrapper").append($(".dataTables_length"));
-
-    //Hide loader
-    vuedata.loader = false;
-
-    //COUNTERS
-    //Main counter
-    var all = ndx.groupAll();
-    var counter = dc
-      .dataCount(".dc-data-count")
-      .dimension(ndx)
-      .group(all)
-      .formatNumber(locale.format(",d"));
-    counter.render();
-    counter.on("renderlet.resetall", function(c) {
-      RefreshTable();
-    });
-
-    //Window resize function
-    window.onresize = function(event) {
-      resizeGraphs();
-    };
   });
 });

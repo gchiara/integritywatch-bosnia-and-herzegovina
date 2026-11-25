@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <?php include 'gtag.php' ?>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -19,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700,800" rel="stylesheet">
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="static/assetsdeclarations.css?v=7">
+  <link rel="stylesheet" href="static/assetsdeclarations.css?v=8">
 </head>
 <body>
     <div id="app" class="section1-page" v-cloak>   
@@ -234,14 +233,15 @@
       <loader v-if="loader" :text="''" />
     </div>
 
+    <?php require 'consent_notice.php' ?>
+
     <script type="text/javascript" src="vendor/js/d3.v5.min.js"></script>
     <script type="text/javascript" src="vendor/js/d3.layout.cloud.js"></script>
     <script type="text/javascript" src="vendor/js/crossfilter.min.js"></script>
     <script type="text/javascript" src="vendor/js/dc.js"></script>
     <script type="text/javascript" src="vendor/js/dc.cloud.js"></script>
     <script type="text/javascript" src="vendor/js/html2canvas.min.js"></script>
-    <script src="static/assetsdeclarations.js?v=7"></script>
-
+    <script src="static/assetsdeclarations.js?v=8"></script>
  
 </body>
 </html>

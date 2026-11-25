@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700,800" rel="stylesheet">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="static/about.css?v=3">
+    <link rel="stylesheet" href="static/about.css?v=4">
 </head>
 <body>
     <div id="app" v-cloak> 
@@ -224,6 +224,7 @@
                 <p>Unutar svake sekcije, klikom na element grafikona, na primjer, na stub u stubičastom grafikonu ili segment u kružnom grafikonu, podaci će se automatski filtrirati na osnovu te selekcije, a svi ostali grafikoni će se ažurirati u skladu s odabranim filterima, prikazujući samo relevantne podatke.</p>
                 <p>Pored ove funkcionalnosti, moguće je koristiti i traku za pretragu na dnu stranice kako biste filtrirali prikaze pomoću tekstualnog unosa, na primjer prema nazivu kompanije ili organizacije koja je povezana s podacima iz određene sekcije.</p>
                 <p>Klikom na dugme „Resetuj filtere“ u donjem desnom uglu, svi filteri se vraćaju na početno stanje, čime se osvježava početni prikaz podataka.</p>
+                <p><a href="./Priručnik_za_korištenje_platforme_Integrity_Watch_BiH.pdf" target="_blank">Priručnik za korištenje platforme Integrity Watch Bosna i Hercegovina</a></p>
               </div>
             </div>
           </div>
@@ -325,6 +326,8 @@
 
       </div>
     </div>
-    <script src="static/about.js?v=3"></script>
+
+    <?php require 'consent_notice.php' ?>
+    <script src="static/about.js?v=4"></script>
 </body>
 </html>

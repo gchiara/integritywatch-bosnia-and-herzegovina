@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <?php include 'gtag.php' ?>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -19,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Oswald:400,500,600,700,800" rel="stylesheet">
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="static/landing.css?v=3">
+  <link rel="stylesheet" href="static/landing.css?v=7">
 </head>
 <body>
     <div id="app" class="section1-page" v-cloak>   
@@ -154,7 +153,40 @@
         </div>
       </div>
 
+      <!-- INTRO VIDEO MODAL -->
+      <div class="modal" id="introVideoModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <div class="modal-title" v-if="language == 'en'">
+                How to use Integrity Watch Bosnia and Herzegovina
+              </div>
+              <div class="modal-title" v-if="language == 'bs'">
+                Kako koristiti platformu Integrity Watch Bosna i Hercegovina
+              </div>
+              <button type="button" class="close" data-dismiss="modal"><i class="material-icons">close</i></button>
+            </div>
+            <!-- Modal body EN -->
+            <div class="modal-body" v-if="language == 'en'">
+              <video id="introVideo" width="400" controls>
+                <source src="IntroVideo_EN.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+              </video>
+            </div>
+            <!-- Modal body BS -->
+            <div class="modal-body" v-if="language == 'bs'">
+              <video id="introVideoBhs" width="400" controls>
+                <source src="IntroVideo_BHS.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <?php require 'consent_notice.php' ?>
 
     <script type="text/javascript" src="vendor/js/d3.v5.min.js"></script>
     <script type="text/javascript" src="vendor/js/d3.layout.cloud.js"></script>
@@ -162,8 +194,6 @@
     <script type="text/javascript" src="vendor/js/dc.js"></script>
     <script type="text/javascript" src="vendor/js/dc.cloud.js"></script>
     <script type="text/javascript" src="vendor/js/html2canvas.min.js"></script>
-    <script src="static/landing.js?v=3"></script>
-
- 
+    <script src="static/landing.js?v=7"></script>
 </body>
 </html>

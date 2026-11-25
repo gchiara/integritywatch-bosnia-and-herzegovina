@@ -444,7 +444,7 @@ $color_red: #e51f5c;
     height: 470px;
   }
   &.section1_chart_row3 {
-    height: 480px;
+    height: 490px;
   }
   &.section2_chart_row1 {
     height: 370px;
@@ -1346,3 +1346,73 @@ table.dataTable.nonclickable tbody tr:hover {
 }
 
 [v-cloak] { display:none; }
+
+
+
+/* COOKIE NOTICE */
+#cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  max-width: 720px;
+  margin: auto;
+  background: #1f1f1f;
+  color: #fff;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.25);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  z-index: 99999;
+  text-align: left;
+  &.hidden {
+    display: none;
+  }
+  a {
+    color: #9fd3ff;
+    text-decoration: underline;
+  }
+}
+.cookie-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cookie-btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  &.accept {
+    background: #2f9e44;
+    color: white;
+  }
+  &.reject {
+    background: #555;
+    color: white;
+  }
+  &.settings {
+    background: #2b6cb0;
+    color: white;
+  }
+}
+#cookie-settings-link {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  z-index: 9998;
+  display: none;
+  button {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

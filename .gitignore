@@ -2,6 +2,7 @@ node_modules/
 dist/
 public/data/procurement.csv
 public/data/downloadable_csv_xls/procurement.csv
+public/analytics-config.js
 npm-debug.log
 yarn-error.log
 .cache/

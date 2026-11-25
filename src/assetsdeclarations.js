@@ -157,6 +157,10 @@ var vueApp = new Vue({
         window.history.pushState(null, "", url.toString());
         window.location.reload();
       }
+      var privacyPolicyLink = document.getElementById('privacyPolicyLink');
+      if(privacyPolicyLink) {
+        privacyPolicyLink.setAttribute('href', './privacy_policy.php?l='+this.language);
+      }
     },
     //Open share and download modals
     openModal: function(modalId) {

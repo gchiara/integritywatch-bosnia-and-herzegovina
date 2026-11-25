@@ -38,8 +38,8 @@ var vuedata = {
   chartMargin: 40,
   dataUpdateDate: "",
   dataYears: [],
-  dataYearsButtons: ["2024", "2023", "2022", "2021", "2020", "2019"],
-  selectedYear: "2024",
+  dataYearsButtons: ["2025", "2024", "2023", "2022", "2021", "2020", "2019"],
+  selectedYear: "2025",
   charts: {
     years: {
       id: "years",
@@ -163,6 +163,10 @@ var vueApp = new Vue({
         window.history.pushState(null, "", url.toString());
         window.location.reload();
       }
+      var privacyPolicyLink = document.getElementById('privacyPolicyLink');
+      if(privacyPolicyLink) {
+        privacyPolicyLink.setAttribute('href', './privacy_policy.php?l='+this.language);
+      }
     },
     //Open share and download modals
     openModal: function(modalId) {
@@ -170,8 +174,12 @@ var vueApp = new Vue({
     },
     //Download dataset
     downloadDataset: function(format) {
-      var csvDatasetPath = "./data/downloadable_csv_xls/procurement.csv";
-      var xlsDatasetPath = "./data/downloadable_csv_xls/procurement.xlsx";
+      var csvDatasetPath = "./data/downloadable_csv_xls/procurement_" + this.selectedYear + ".csv";
+      var xlsDatasetPath = "./data/downloadable_csv_xls/procurement_" + this.selectedYear + ".xlsx";
+      if(this.selectedYear == '') {
+        csvDatasetPath = "./data/downloadable_csv_xls/procurement.csv";
+        xlsDatasetPath = "";
+      }
       if (format == "csv") {
         window.open(csvDatasetPath, "_blank");
       }
@@ -539,7 +547,7 @@ json("./data/strings.json?" + randomPar, (err, stringsData) => {
   vuedata.stringsData = stringsData;
   vueApp.selectLanguage(getUrlParameter("l"), false);
   //Get Dataset path based on selected year
-  vuedata.dataYearsButtons = ["2024", "2023", "2022", "2021", "2020", "2019"];
+  vuedata.dataYearsButtons = ["2025", "2024", "2023", "2022", "2021", "2020", "2019"];
   var datasetPath = "procurement.csv";
   if (
     vuedata.selectedYear !== "" &&
@@ -1005,7 +1013,7 @@ json("./data/strings.json?" + randomPar, (err, stringsData) => {
         var charsLength = recalcCharsLength(width);
         chart
           .width(width)
-          .height(380)
+          .height(400)
           .margins({ top: 0, left: 0, right: 0, bottom: 20 })
           .group(group)
           .gap(70)
